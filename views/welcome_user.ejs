@@ -1,0 +1,73 @@
+
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+
+    <!-- Main Site -->
+    <main id="site-main">
+        <div class="container">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>
+                            <div class="box-nav d-flex justify-between">
+                                <div class="filter">
+                                    <a href="/"><i class="fas fa-angle-double-left"></i> Back</a>
+                                </div>
+                            </div>
+                        </th>
+                        <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                        <th>Welcome to GCSE Maths Quiz</th>
+                       <td>
+                            <a href="/update-user?id=<%= user[0]._id%>" class="btn border-shadow update">
+                                <span class="text-gradient"><i class="fas fa-pencil-alt"> Update </i></span>
+                            </a>
+                            <a class="btn border-shadow delete" data-id=<%= user[0]._id%> >
+                                <span class="text-gradient"><i class="fas fa-times"> Delete </i></span>
+                            </a>
+                            
+                            <a href="/delete-user?id=<%= user[0]._id%>" class="btn border-shadow update">
+                                <span class="text-gradient"><i class="fas fa-times"> Delete </i></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table">
+                <tbody>                 
+                    <thead class="thead-dark">
+                        <tr>
+                            <th></th>
+                            <th> Hey <%= user[0].name%> !!!</th>
+                            <th></th>
+                            <th> It's quiz time. Be ready !!! </th>
+                            <th></th>
+                            <th> Reward Points: <%= user[0].totalRewardPoints%> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                </tbody>
+            </table>
+
+            <div class="form-title text-center">
+                <h4><span class="text-light">Select below topics to test your knowledge</span></h4>
+            </div>
+
+            <% for(var i = 0; i < user[0].quiz.length; i++) { %>
+                <div class="form-title text-center">
+                    <div class="filter">
+                        <a href="/"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> <%= user[0].quiz[i].topic%> </h4></a>
+                    </div>
+                </div>
+            <% } %>
+            
+        </div>
+    </main>
+<!-- /Main Site -->
+
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->

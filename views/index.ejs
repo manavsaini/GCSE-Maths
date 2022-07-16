@@ -1,0 +1,45 @@
+
+<!-- include header -->
+    <%- include('include/_header') %>
+<!-- /include header -->
+
+
+    <!-- Main Site -->
+    <main id="site-main">
+        <div class="container">
+            <div class="box-nav d-flex justify-between">
+                <a href="/add-user" class="border-shadow">
+                    <span class="text-gradient">New User <i class="fas fa-user"></i></span>
+                </a>
+            </div>
+
+            <div class="form-title text-center">
+                <h2 class="text-dark">LOGIN</h2>
+            </div>
+
+            <!-- form handling -->
+            <form action="/api/users" method="GET" id="login_user">
+                <div class="new_user">
+                    <div class="form-group">
+                        <label for="email" class="text-light">Email</label>
+                        <input type="text" name="email" value="" placeholder="abc@gmail.com">
+                    </div>            
+                    <div class="form-group">
+                        <label for="password" class="text-light">Password</label>
+                        <input type="password" name="password" value="" placeholder="******">
+                    </div>
+            
+                    <div class="form-group">
+                        <button type="submit" class="btn text-dark update">Login</button>
+                    </div>
+                </div>
+            </form>
+          
+        </div>
+    </main>
+<!-- /Main Site -->
+
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->
