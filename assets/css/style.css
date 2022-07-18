@@ -151,13 +151,15 @@ table{
     margin: auto;
 }
 
-#index .form-group,
+#login_user .form-group,
+#delete_user .form-group,
 #update_user .form-group,
 #add_user .form-group{
     margin: .4em 0;
 }
 
-#index .form-group input[type="text"],
+#login_user .form-group input[type="text"],
+#delete_user .form-group input[type="text"],
 #update_user .form-group input[type="text"],
 #add_user .form-group input[type="text"]{
     width: 100%;
@@ -169,6 +171,21 @@ table{
     border-radius: .2em;
 }
 
+#login_user .form-group input[type="password"],
+#delete_user .form-group input[type="password"],
+#update_user .form-group input[type="password"],
+#add_user .form-group input[type="password"]{
+    width: 100%;
+    padding: .6em 1em;
+    margin: .5em 0;
+    border: 1px solid var(--border);
+    font-family: 'Barlow', sans-serif;
+    font-size: 1em;
+    border-radius: .2em;
+}
+
+#login_user .form-group .radio,
+#delete_user .form-group .radio,
 #update_user .form-group .radio,
 #add_user .form-group .radio{
     margin: 1em 2em;
@@ -214,7 +231,8 @@ table{
     background: #b4b4b4;
 }
 
-#index .form-group .btn,
+#login_user .form-group .btn,
+#delete_user .form-group .btn,
 #update_user .form-group .btn,
 #add_user .form-group .btn{
     width: 100%;
@@ -228,7 +246,8 @@ table{
     margin: .5em 0;
 }
 
-#index .form-group .btn:hover,
+#login_user .form-group .btn,
+#delete_user .form-group .btn:hover,
 #update_user .form-group .btn:hover,
 #add_user .form-group .btn:hover{
     background-color: var(--dark);

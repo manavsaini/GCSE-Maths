@@ -61,19 +61,15 @@ exports.login = (req, res)=>{
                 if(data.length==0){
                     res.status(404).send({ message : "User details are not found with provided combination of Email and Password. Please retry with the correct credentials."})
                 }else{
-                    //console.log(data);
-                    res.redirect('/welcome-user');
-                    //const id3 = '62cb77f02b33541ba84ba573';
-                    //const id3 = data.find({}).select('_id');
-                    //console.log('id3: ' + id3);
-                    //console.log('id3: ' + data._id);
-                    //console.log('name: ' + data.name);
+                    console.log(data);
+
+                    //Final solution
+                    const id3 = data[0]._id;
+                    res.redirect('/welcome-user?id='+id3);
+
+                    //For trouble-shooting
                     //res.send(data);
-                    //res.redirect('/welcome-user?id='+id3);
                     //res.redirect('/welcome-user');
-                    //res.render("welcome_user", { users : res.data}).catch(err =>{
-                    //    res.send(err);
-                    //})
                 }
             })
             .catch(err =>{
@@ -104,7 +100,8 @@ exports.find_by_id = (req, res)=>{
             })
 
     }else{
-         //res.status(404).send({ message : "Please provide _id value" })
+         res.status(404).send({ message : "No '_id' value is passed while navigating to welcome-user page" })
+         /* Fro trouble-shooting
          Userdb.find()
             .then(user => {
                 res.send(user)
@@ -112,6 +109,7 @@ exports.find_by_id = (req, res)=>{
             .catch(err => {
                 res.status(500).send({ message : err.message || "Error Occurred while retriving user information" })
             })
+        */
     }   
 }
 
@@ -130,7 +128,7 @@ exports.update = (req, res)=>{
                 res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
             }else{
                 res.send(data)
-                //res.redirect('/welcome-user');
+                //res.redirect('/welcome-user?id='+data[0]._id);
             }
         })
         .catch(err =>{
@@ -150,6 +148,7 @@ exports.delete = (req, res)=>{
                 res.send({
                     message : "User was deleted successfully!"
                 })
+                //res.redirect('/');
             }
         })
         .catch(err =>{
