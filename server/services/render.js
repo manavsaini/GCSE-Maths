@@ -37,3 +37,13 @@ exports.delete_user = (req, res) =>{
             res.send(err);
         })
 }
+
+exports.topic = (req, res) =>{
+    axios.get('http://localhost:3000/api/users/find-by-id-topic', { params : { id : req.query.id, id_topic: req.query.id_topic }})
+        .then(function(userdata){
+            res.render("topic", { user : userdata.data})
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+}

@@ -13,19 +13,15 @@
                         <th>
                             <div class="box-nav d-flex justify-between">
                                 <div class="filter">
-                                    <a href="/"><i class="fas fa-angle-double-left"></i> Back</a>
+                                    <a href="/welcome-user?id=<%= user._id %>"><i class="fas fa-angle-double-left"></i> Back</a>
                                 </div>
                             </div>
                         </th>
-                        <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
-                        <th>Welcome to GCSE Maths Quiz</th>
+                        </th><th></th><th></th>
+                        <th>Welcome to <%= user.quiz[0].topic %> section</th>
                        <td>
-                            <a href="/update-user?id=<%= user._id %>" class="btn border-shadow update">
-                                <span class="text-gradient"><i class="fas fa-pencil-alt"> Update </i></span>
-                            </a>
-                            
-                            <a href="/delete-user?id=<%= user._id %>" class="btn border-shadow update">
-                                <span class="text-gradient"><i class="fas fa-times"> Delete </i></span>
+                            <a href="/welcome-user?id=<%= user._id %>" class="btn border-shadow update">
+                                <span class="text-gradient"> Home </span>
                             </a>
                         </td>
                     </tr>
@@ -47,15 +43,24 @@
                     </thead>
                 </tbody>
             </table>
+            <h4><span class="text-light">User_Id:<%= user._id %></span></h4>
+
+            <h4><span class="text-light">Topic1_Id:<%= user.quiz[0]._id %></span></h4>
+            <h4><span class="text-light">Question1_Id:<%= user.quiz[0].questionBank[0]._id %></span></h4>
+            <h4><span class="text-light">Question2_Id:<%= user.quiz[0].questionBank[1]._id %></span></h4>
+
+            <h4><span class="text-light">Topic2_Id:<%= user.quiz[1]._id %></span></h4>
+            <h4><span class="text-light">Question1_Id:<%= user.quiz[1].questionBank[0]._id %></span></h4>
+            <h4><span class="text-light">Question2_Id:<%= user.quiz[1].questionBank[1]._id %></span></h4>
 
             <div class="form-title text-center">
-                <h4><span class="text-light">Select below topics to test your knowledge</span></h4>
+                <h4><span class="text-light">Select below questions to test your knowledge</span></h4>
             </div>
 
-            <% for(var i = 0; i < user.quiz.length; i++) { %>
+            <% for(var i = 0; i < user.quiz[0].questionBank.length; i++) { %>
                 <div class="form-title text-center">
                     <div class="filter">
-                        <a href="/topic?id=<%= user._id %>&id_topic=<%= user.quiz[i]._id %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> <%= user.quiz[i].topic %> </h4></a>
+                        <a href="/"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> Question-<%= i+1 %> </h4></a>
                     </div>
                 </div>
             <% } %>

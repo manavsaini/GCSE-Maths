@@ -34,12 +34,19 @@ route.get('/update-user', services.update_user)
  */
  route.get('/delete-user', services.delete_user)
 
+/**
+ *  @description to naviagate to topic page
+ *  @method GET /topic
+ */
+ route.get('/topic', services.topic)
+
 // API
 route.post('/api/users', controller.create);
 route.get('/api/users', controller.login);
 route.get('/api/users/find-by-id', controller.find_by_id);
 route.put('/api/users/:id', controller.update);
 route.delete('/api/users/:id', controller.delete);
+route.get('/api/users/find-by-id-topic', controller.find_by_id_topic);
 
 
 module.exports = route

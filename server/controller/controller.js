@@ -157,3 +157,76 @@ exports.delete = (req, res)=>{
             });
         });
 }
+
+// retrieve user details based on '_id' value passed 
+exports.find_by_id_topic = (req, res)=>{
+
+    if(req.query.id && req.query.id_topic){
+        const id = req.query.id;
+        const id_topic = req.query.id_topic;
+        
+        console.log('id: '+id);
+        console.log('id_topic: '+id_topic);
+        
+        /* Checking for nested search
+            Userdb.findById(id)
+            .then(data1 =>{
+                if(data1.length==0){
+                    res.status(404).send({ message : "User details are not found with id " + id + " and id_topic " + id_topic})
+                }else{
+                    console.log(data1);
+                    console.log(data1.quiz);
+                    data1.quiz.findById(id_topic)
+                    .then(data =>{
+                        if(data.length==0){
+                            res.status(404).send({ message : "User details are not found with id " + id + " and id_topic " + id_topic})
+                        }else{
+                            console.log(data);
+                            res.send(data)
+                        }
+                })
+                }
+            })
+        */
+        /* Normal functioning */
+            Userdb.findById(id) 
+            .then(data =>{
+                if(data.length==0){
+                    res.status(404).send({ message : "User details are not found with id " + id})
+                }else{
+                    console.log(data);
+                    console.log('Quiz: ' + data.quiz.filter(cat => cat.id === id_topic));
+                    res.send(data)
+                }
+            })
+        
+        /* Checking with simultanoues search 
+            Userdb.find({_id: id })//, quiz._id: id_topic
+            .then(data =>{
+                if(data.length==0){
+                    res.status(404).send({ message : "User details are not found with id " + id})
+                }else{
+                    console.log(data);
+                    res.send(data)
+                }
+            })
+        */
+
+
+            .catch(err =>{
+                res.status(500).send({ message: "Error retrieving user details with id " + id + " and id_topic " + id_topic})
+            })
+
+    }else{
+         res.status(404).send({ message : "Either 'id' or 'id_topic' or both value(s) not passed while navigating to topic page" })
+         /* For trouble-shooting
+         Userdb.find()
+            .then(user => {
+                res.send(user)
+            })
+            .catch(err => {
+                res.status(500).send({ message : err.message || "Error Occurred while retriving user information" })
+            })
+        */
+    }   
+}
