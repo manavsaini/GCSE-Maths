@@ -40,13 +40,19 @@ route.get('/update-user', services.update_user)
  */
  route.get('/topic', services.topic)
 
+ /**
+ *  @description to naviagate to question page
+ *  @method GET /question
+ */
+  route.get('/question', services.question)
+
 // API
 route.post('/api/users', controller.create);
 route.get('/api/users', controller.login);
 route.get('/api/users/find-by-id', controller.find_by_id);
 route.put('/api/users/:id', controller.update);
 route.delete('/api/users/:id', controller.delete);
-route.get('/api/users/find-by-id-topic', controller.find_by_id_topic);
+//route.get('/api/users/find-by-id-topic', controller.find_by_id_topic);
 
 
 module.exports = route

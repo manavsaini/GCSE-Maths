@@ -158,7 +158,9 @@ exports.delete = (req, res)=>{
         });
 }
 
-// retrieve user details based on '_id' value passed 
+
+// retrieve user details based on 'id' and 'id_topic' value passed 
+/*
 exports.find_by_id_topic = (req, res)=>{
 
     if(req.query.id && req.query.id_topic){
@@ -168,49 +170,70 @@ exports.find_by_id_topic = (req, res)=>{
         console.log('id: '+id);
         console.log('id_topic: '+id_topic);
         
-        /* Checking for nested search
-            Userdb.findById(id)
-            .then(data1 =>{
-                if(data1.length==0){
-                    res.status(404).send({ message : "User details are not found with id " + id + " and id_topic " + id_topic})
-                }else{
-                    console.log(data1);
-                    console.log(data1.quiz);
-                    data1.quiz.findById(id_topic)
-                    .then(data =>{
-                        if(data.length==0){
-                            res.status(404).send({ message : "User details are not found with id " + id + " and id_topic " + id_topic})
-                        }else{
-                            console.log(data);
-                            res.send(data)
-                        }
-                })
-                }
-            })
-        */
-        /* Normal functioning */
+        /* Normal functioning and checking nested search
             Userdb.findById(id) 
             .then(data =>{
                 if(data.length==0){
                     res.status(404).send({ message : "User details are not found with id " + id})
                 }else{
-                    console.log(data);
-                    console.log('Quiz: ' + data.quiz.filter(cat => cat.id === id_topic));
+                    
+                    console.log('data: ' + data);
                     res.send(data)
+                    
+                    //console.log('user: { _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }');
+                    //console.log(JSON.stringify('{ _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }'));
+                    //console.log(res.json('{ _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }'));
+                    //res.send(JSON.stringify('{ _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }'))
+                    
+                    //console.log(data.quiz.questionBank[0].filter(quizData => quizData.id === "62d5d60767d1ca451867a694"));
+                    //res.send(data.quiz.filter(quizData => quizData.id === id_topic));
+
+                
                 }
             })
         
         /* Checking with simultanoues search 
-            Userdb.find({_id: id })//, quiz._id: id_topic
+            //Userdb.find({ _id: id }, { "quiz._id": id_topic })
+            //Userdb.find({"quiz":{"$elemMatch":{"topic":"algebra"}}})
+            Userdb.aggregate([
+                    {
+                      $match: {
+                        "quiz._id": id_topic
+                      }
+                    },
+                    //just precondition can be skipped
+                    {$unwind: "$quiz"
+                  },
+                  {$match: {
+                    "quiz._id": id_topic
+                  }
+                  },
+                  {
+                  $group: {
+                    _id: {
+                      id: "$_id"
+                    },
+                    "quiz": {
+                      $push: "$quiz"
+                    }
+                  }
+                  }//,
+                  //{$group:{
+                  //    _id:"$_id.id",
+                  //    stores:{$push:{_id:"$_id.storesId","offers":"$offers"}}
+                  //}}
+                  ])
+                
             .then(data =>{
                 if(data.length==0){
                     res.status(404).send({ message : "User details are not found with id " + id})
                 }else{
                     console.log(data);
+                    //console.log(data[0].quiz[1].topic);
                     res.send(data)
                 }
             })
-        */
+            
 
 
             .catch(err =>{
@@ -227,6 +250,7 @@ exports.find_by_id_topic = (req, res)=>{
             .catch(err => {
                 res.status(500).send({ message : err.message || "Error Occurred while retriving user information" })
             })
-        */
+        
     }   
 }
+*/

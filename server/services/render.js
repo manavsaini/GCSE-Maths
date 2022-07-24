@@ -39,9 +39,26 @@ exports.delete_user = (req, res) =>{
 }
 
 exports.topic = (req, res) =>{
-    axios.get('http://localhost:3000/api/users/find-by-id-topic', { params : { id : req.query.id, id_topic: req.query.id_topic }})
+    axios.get('http://localhost:3000/api/users/find-by-id', { params : { id : req.query.id }})
         .then(function(userdata){
-            res.render("topic", { user : userdata.data})
+            res.render("topic", { users : [
+                { user : userdata.data },
+                { topic_index : req.query.topic_index }
+            ]})
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+}
+
+exports.question = (req, res) =>{
+    axios.get('http://localhost:3000/api/users/find-by-id', { params : { id : req.query.id }})
+        .then(function(userdata){
+            res.render("question", { users : [
+                { user : userdata.data },
+                { topic_index : req.query.topic_index },
+                { question_index : req.query.question_index }
+            ]})
         })
         .catch(err =>{
             res.send(err);

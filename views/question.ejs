@@ -7,9 +7,10 @@
 
 <% var all_data = users[0].user %>
 <% var quiz_index = users[1].topic_index %>
+<% var questionBank_index= users[2].question_index %>
 
 <!-- /variables section -->
-
+    
     <!-- Main Site -->
     <main id="site-main">
         <div class="container">
@@ -19,12 +20,12 @@
                         <th>
                             <div class="box-nav d-flex justify-between">
                                 <div class="filter">
-                                    <a href="/welcome-user?id=<%= all_data._id %>"><i class="fas fa-angle-double-left"></i> Back</a>
+                                    <a href="/topic?id=<%= all_data._id %>&topic_index=<%= quiz_index %>"><i class="fas fa-angle-double-left"></i> Back</a>
                                 </div>
                             </div>
                         </th>
                         </th><th></th><th></th>
-                        <th>Welcome to <%= all_data.quiz[quiz_index].topic %> section</th>
+                        <th><%= users[0].user.quiz[quiz_index].topic %></th>
                        <td>
                             <a href="/welcome-user?id=<%= all_data._id %>" class="btn border-shadow update">
                                 <span class="text-gradient"> Home </span>
@@ -41,7 +42,7 @@
                             <th></th>
                             <th> Hey <%= all_data.name %> !!!</th>
                             <th></th>
-                            <th> It's quiz time. Be ready !!! </th>
+                            <th> Question-<%= questionBank_index+1 %> </th>
                             <th></th>
                             <th> Reward Points: <%= all_data.totalRewardPoints %> </th>
                             <th> </th>
@@ -51,16 +52,8 @@
             </table>
 
             <div class="form-title text-center">
-                <h4><span class="text-light">Select below questions to test your knowledge</span></h4>
+                <h4><span class="text-light"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].question %></span></h4>
             </div>
-
-            <% for(var i = 0; i < all_data.quiz[quiz_index].questionBank.length; i++) { %>
-                <div class="form-title text-center">
-                    <div class="filter">
-                        <a href="/question?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= i %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> Question-<%= i+1 %> <%= all_data.quiz[quiz_index].questionBank[i].question %> </h4></a>
-                    </div>
-                </div>
-            <% } %>
             
         </div>
     </main>

@@ -55,7 +55,7 @@
             <% for(var i = 0; i < user.quiz.length; i++) { %>
                 <div class="form-title text-center">
                     <div class="filter">
-                        <a href="/topic?id=<%= user._id %>&id_topic=<%= user.quiz[i]._id %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> <%= user.quiz[i].topic %> </h4></a>
+                        <a href="/topic?id=<%= user._id %>&topic_index=<%= i %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> <%= user.quiz[i].topic %> </h4></a>
                     </div>
                 </div>
             <% } %>
