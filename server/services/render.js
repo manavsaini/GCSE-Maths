@@ -64,3 +64,17 @@ exports.question = (req, res) =>{
             res.send(err);
         })
 }
+
+exports.help_user = (req, res) =>{
+    axios.get('http://localhost:3000/api/users/find-by-id', { params : { id : req.query.id }})
+        .then(function(userdata){
+            res.render("help_user", { users : [
+                { user : userdata.data },
+                { topic_index : req.query.topic_index },
+                { question_index : req.query.question_index }
+            ]})
+        })
+        .catch(err =>{
+            res.send(err);
+        })
+}

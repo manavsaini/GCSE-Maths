@@ -1,0 +1,116 @@
+
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+<!-- variables section -->
+
+<% var all_data = users[0].user %>
+<% var quiz_index = users[1].topic_index %>
+<% var questionBank_index= users[2].question_index %>
+
+<!-- /variables section -->
+    
+    <!-- Main Site -->
+    <main id="site-main">
+        <div class="container">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>
+                            <div class="box-nav d-flex justify-between">
+                                <div class="filter">
+                                    <a href="/question?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>"><i class="fas fa-angle-double-left"></i> Back</a>
+                                </div>
+                            </div>
+                        </th>
+                        <th></th><th></th>
+                        <th><h2><%= all_data.quiz[quiz_index].topic %></h2></th>
+                       <td>
+                            <a href="/welcome-user?id=<%= all_data._id %>" class="btn border-shadow update">
+                                <span class="text-gradient"> Home </span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table">
+                <tbody>                 
+                    <thead class="thead-dark">
+                        <tr>
+                            <th> Hey <%= all_data.name %> !!!</th>
+                            <th></th>
+                            <th> Do you need some help? </th>
+                            <th></th>
+                            <th> Reward Points: <%= all_data.totalRewardPoints %> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                </tbody>
+            </table>
+
+            <div class="form-title text-center">
+                <h3><span class="text-dark">Hint(s): <%= all_data.quiz[quiz_index].questionBank[questionBank_index].hints %></span></h3>
+            </div>
+            
+            <div class="form-title text-center">
+                <h3><span class="text-light">Your previously added detailed solution is shown below. You can also modify it using below field.</span></h3>
+            </div>
+
+            <!-- form handling -->
+            <form method="POST" id="help_user1">
+                <div class="new_user">
+                    <div class="form-group">
+                        <div class="form-title text-center">
+                            <label for="userSolution" class="text-dark"><h4>Enter/Modify your detailed solution</h4></label>
+                            <input type="text" name="userSolution" value="<%= all_data.quiz[quiz_index].questionBank[questionBank_index].userSolution %>" placeholder="Type here ...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn text-dark update">Save</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="form-title text-center">
+                <h3><span class="text-light">You can also send your solution for further review by using below fields.</span></h3>
+            </div>
+
+            <!-- form handling -->
+            <form action="/api/users/text-email?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>" method="POST" id="help_user2">
+                <div class="new_user">
+                    <div class="form-group">
+                        <label for="sender_email" class="text-light">Enter your email</label>
+                        <input type="text" name="sender_email" value="" placeholder="abc@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="sender_password" class="text-light">Enter your password</label>
+                        <input type="password" name="sender_password" value="tvfqqaxlhcaddlml" placeholder="******">
+                    </div>
+                    <div class="form-group">
+                        <label for="receiver_email" class="text-light">Enter your reviewer's email</label>
+                        <input type="text" name="receiver_email" value="" placeholder="xyz@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject" class="text-light">Enter the subject of email</label>
+                        <input type="text" name="subject" value="" placeholder="Please review">
+                    </div>
+                    <div class="form-group">
+                        <label for="userSolution" class="text-light">Enter your detailed solution for review</label>
+                        <input type="text" name="userSolution" value="" placeholder="Type here ...">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn text-dark update">Send for review</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </main>
+<!-- /Main Site -->
+
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->

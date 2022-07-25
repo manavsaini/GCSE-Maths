@@ -24,9 +24,13 @@
                                 </div>
                             </div>
                         </th>
-                        </th><th></th><th></th>
-                        <th><%= users[0].user.quiz[quiz_index].topic %></th>
+                        <th></th><th></th><th></th><th></th>
+                        <th><h2><%= all_data.quiz[quiz_index].topic %></h2></th>
                        <td>
+                            <a href="/help-user?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>" class="btn border-shadow update">
+                                <i class="text-dark"> Help? </i>
+                            </a>                        
+
                             <a href="/welcome-user?id=<%= all_data._id %>" class="btn border-shadow update">
                                 <span class="text-gradient"> Home </span>
                             </a>
@@ -39,10 +43,9 @@
                 <tbody>                 
                     <thead class="thead-dark">
                         <tr>
-                            <th></th>
                             <th> Hey <%= all_data.name %> !!!</th>
                             <th></th>
-                            <th> Question-<%= questionBank_index+1 %> </th>
+                            <th> Question </th>
                             <th></th>
                             <th> Reward Points: <%= all_data.totalRewardPoints %> </th>
                             <th> </th>
@@ -52,9 +55,53 @@
             </table>
 
             <div class="form-title text-center">
-                <h4><span class="text-light"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].question %></span></h4>
+                <h3><span class="text-dark"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].question %></span></h3>
             </div>
             
+            <!-- form handling -->
+            <form method="POST" id="question_response">
+                <div class="new_user">
+                    <div class="form-group">
+                        <div class="form-title text-center">
+                            <label for="choices" class="text-dark"><h4>Select the correct option from below choices.</h4></label>
+                        </div>
+                        <table class="table">
+                            <tbody>            
+                                    <tr><td>
+                                        <div class="radio inline">
+                                            <input type="radio" id="radio-1" name="choices" value=<%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[0] %>>
+                                            <label for="radio-1" class="radio-label"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[0] %></label>
+                                        </div>
+                                    </td></tr>
+                                    <tr><td>
+                                        <div class="radio inline">
+                                            <input type="radio" id="radio-2" name="choices" value=<%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[1] %>>
+                                            <label for="radio-2" class="radio-label"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[1] %></label>
+                                        </div>
+                                    </td></tr>
+                                    <tr><td>
+                                        <div class="radio inline">
+                                            <input type="radio" id="radio-3" name="choices" value=<%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[2] %>>
+                                            <label for="radio-3" class="radio-label"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[2] %></label>
+                                        </div>
+                                    </td></tr>
+                                    <tr><td>
+                                        <div class="radio inline">
+                                            <input type="radio" id="radio-4" name="choices" value=<%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[3] %>>
+                                            <label for="radio-4" class="radio-label"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[3] %></label>
+                                        </div>
+                                    </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn text-dark update">Submit</button>
+                    </div>
+
+                </div>
+            </form>
+
         </div>
     </main>
 <!-- /Main Site -->

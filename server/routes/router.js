@@ -46,6 +46,12 @@ route.get('/update-user', services.update_user)
  */
   route.get('/question', services.question)
 
+  /**
+  *  @description to naviagate to help page
+  *  @method GET /help-user
+  */
+   route.get('/help-user', services.help_user)
+
 // API
 route.post('/api/users', controller.create);
 route.get('/api/users', controller.login);
@@ -53,6 +59,10 @@ route.get('/api/users/find-by-id', controller.find_by_id);
 route.put('/api/users/:id', controller.update);
 route.delete('/api/users/:id', controller.delete);
 //route.get('/api/users/find-by-id-topic', controller.find_by_id_topic);
-
+/**
+  *  @description to send enail
+  *  @method POST /
+  */
+ route.post('/api/users/text-email', controller.text_email)
 
 module.exports = route

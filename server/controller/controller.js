@@ -1,4 +1,5 @@
 var Userdb = require('../model/model');
+var nodemailer = require('nodemailer');
 
 // create and save new user
 exports.create = (req,res)=>{
@@ -18,18 +19,32 @@ exports.create = (req,res)=>{
         quiz : 
         [
             { 
-                topic : "algebra", questionBank :
+                topic : "Algebra", questionBank :
                 [
-                    {question : "What is your name", choices : ["Manav", "Rohan", "Raman", "Kabir"], hints : "Starts with M letter", correctChoice : "Manav", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " },
-                    {question : "What is your real brother's name", choices : ["Manav", "Rohan", "Raman", "Kabir"], hints : "Starts with Ro letter", correctChoice : "Rohan", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " }
+                    {question : "What is your name?", choices : ["Manav", "Rohan", "Raman", "Kabir"], hints : "Starts with M letter", correctChoice : "Manav", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " },
+                    {question : "What is your real brother's name?", choices : ["Manav", "Rohan", "Raman", "Kabir"], hints : "Starts with Ro letter", correctChoice : "Rohan", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " }
                 ] 
             },
             { 
-                topic : "calculus", questionBank :
+                topic : "Probability", questionBank :
                 [
-                    {question : "What is your age", choices : ["25", "26", "27", "28"], hints : "Greater then 27", correctChoice : "28", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " },
-                    {question : "What is your real brother's age", choices : ["23", "24", "22", "25"], hints : "Approaching 24", correctChoice : "23", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " }
+                    {question : "What is your age?", choices : ["25", "26", "27", "28"], hints : "Greater then 27", correctChoice : "28", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " },
+                    {question : "What is your real brother's age?", choices : ["23", "24", "22", "25"], hints : "Approaching 24", correctChoice : "23", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " }
                 ]
+            },
+            { 
+                topic : "Statistics", questionBank :
+                [
+                    {question : "What is your age?", choices : ["25", "26", "27", "28"], hints : "Greater then 27", correctChoice : "28", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " },
+                    {question : "What is your real brother's age?", choices : ["23", "24", "22", "25"], hints : "Approaching 24", correctChoice : "23", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " }
+                ]
+            },
+            { 
+                topic : "Number", questionBank :
+                [
+                    {question : "What is your name?", choices : ["Manav", "Rohan", "Raman", "Kabir"], hints : "Starts with M letter", correctChoice : "Manav", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " },
+                    {question : "What is your real brother's name?", choices : ["Manav", "Rohan", "Raman", "Kabir"], hints : "Starts with Ro letter", correctChoice : "Rohan", rewardPoints : 5, flag : "Y", counter : 0, pointsEarned: 0, userSolution : " " }
+                ] 
             }
         ]
     })
@@ -158,6 +173,33 @@ exports.delete = (req, res)=>{
         });
 }
 
+exports.text_email = (req, res) =>{
+    const { sender_email, sender_password, receiver_email, subject, userSolution } = req.body;
+
+    const mailData = {
+            from: sender_email,
+            to: receiver_email,
+            subject: subject,
+            text: userSolution
+    }
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: sender_email,
+          pass: sender_password
+        }
+      })
+
+    transporter.sendMail(mailData, (error, info) => {
+            if (error){
+                res.status(500).send({ message : "Couldn't send the email"});
+                return console.log(error);
+            }
+            //res.status(200).send({ message: "Mail send", message_id: info.messageID });req.query.id
+            res.redirect('/help-user?id='+req.query.id+'&topic_index='+req.query.topic_index+'&question_index='+req.query.question_index);
+    })
+}
 
 // retrieve user details based on 'id' and 'id_topic' value passed 
 /*

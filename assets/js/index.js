@@ -51,3 +51,7 @@ $("#delete_user").submit(function(event){
         })
     }
 })
+
+$("#help_user2").submit(function(event){
+    alert("Your response has been mailed successfully for review!");
+})

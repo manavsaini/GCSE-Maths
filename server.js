@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const bodyparser = require("body-parser");
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 const connectDB = require('./server/database/connection');
 

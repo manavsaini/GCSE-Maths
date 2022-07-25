@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                         </th>
-                        </th><th></th><th></th>
+                        <th></th><th></th>
                         <th>Welcome to <%= all_data.quiz[quiz_index].topic %> section</th>
                        <td>
                             <a href="/welcome-user?id=<%= all_data._id %>" class="btn border-shadow update">
@@ -51,13 +51,13 @@
             </table>
 
             <div class="form-title text-center">
-                <h4><span class="text-light">Select below questions to test your knowledge</span></h4>
+                <h3><span class="text-light">Select below questions to test your knowledge</span></h3>
             </div>
 
             <% for(var i = 0; i < all_data.quiz[quiz_index].questionBank.length; i++) { %>
                 <div class="form-title text-center">
                     <div class="filter">
-                        <a href="/question?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= i %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> Question-<%= i+1 %> <%= all_data.quiz[quiz_index].questionBank[i].question %> </h4></a>
+                        <a href="/question?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= i %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> Question-<%= i+1 %> </h4></a>
                     </div>
                 </div>
             <% } %>

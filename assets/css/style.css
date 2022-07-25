@@ -151,6 +151,9 @@ table{
     margin: auto;
 }
 
+#help_user1 .form-group,
+#help_user2 .form-group,
+#question_response .form-group,
 #login_user .form-group,
 #delete_user .form-group,
 #update_user .form-group,
@@ -158,6 +161,9 @@ table{
     margin: .4em 0;
 }
 
+#help_user1 .form-group input[type="text"],
+#help_user2 .form-group input[type="text"],
+#question_response .form-group input[type="text"],
 #login_user .form-group input[type="text"],
 #delete_user .form-group input[type="text"],
 #update_user .form-group input[type="text"],
@@ -171,6 +177,9 @@ table{
     border-radius: .2em;
 }
 
+#help_user1 .form-group input[type="password"],
+#help_user2 .form-group input[type="password"],
+#question_response .form-group input[type="password"],
 #login_user .form-group input[type="password"],
 #delete_user .form-group input[type="password"],
 #update_user .form-group input[type="password"],
@@ -184,6 +193,9 @@ table{
     border-radius: .2em;
 }
 
+#help_user1 .form-group .radio,
+#help_user2 .form-group .radio,
+#question_response .form-group .radio,
 #login_user .form-group .radio,
 #delete_user .form-group .radio,
 #update_user .form-group .radio,
@@ -231,6 +243,9 @@ table{
     background: #b4b4b4;
 }
 
+#help_user1 .form-group .btn,
+#help_user2 .form-group .btn,
+#question_response .form-group .btn,
 #login_user .form-group .btn,
 #delete_user .form-group .btn,
 #update_user .form-group .btn,
@@ -246,6 +261,9 @@ table{
     margin: .5em 0;
 }
 
+#help_user1 .form-group .btn,
+#help_user2 .form-group .btn,
+#question_response .form-group .btn,
 #login_user .form-group .btn,
 #delete_user .form-group .btn:hover,
 #update_user .form-group .btn:hover,
