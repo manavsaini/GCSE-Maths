@@ -41,7 +41,7 @@
                             <th></th>
                             <th> It's quiz time. Be ready !!! </th>
                             <th></th>
-                            <th> Reward Points: <%= user.totalRewardPoints %> </th>
+                            <th> Credit Score: <%= user.totalRewardPoints %> </th>
                             <th> </th>
                         </tr>
                     </thead>
@@ -49,13 +49,13 @@
             </table>
 
             <div class="form-title text-center">
-                <h3><span class="text-light">Select below topics to test your knowledge</span></h3>
+                <h4><span class="text-dark">Select below topics to test your knowledge</span></h4>
             </div>
 
             <% for(var i = 0; i < user.quiz.length; i++) { %>
                 <div class="form-title text-center">
                     <div class="filter">
-                        <a href="/topic?id=<%= user._id %>&topic_index=<%= i %>"><h4 class="text-dark"><i class="fas fa-angle-double-right"></i> <%= user.quiz[i].topic %> </h4></a>
+                        <a href="/topic?id=<%= user._id %>&topic_index=<%= i %>"><h3 class="text-dark"><i class="fas fa-angle-double-right"></i> <%= user.quiz[i].topic %> </h3></a>
                     </div>
                 </div>
             <% } %>

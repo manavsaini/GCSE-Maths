@@ -173,126 +173,157 @@ exports.delete = (req, res)=>{
         });
 }
 
-exports.text_email = (req, res) =>{
-    const { sender_email, sender_password, receiver_email, subject, userSolution } = req.body;
-
-    const mailData = {
-            from: sender_email,
-            to: receiver_email,
-            subject: subject,
-            text: userSolution
+exports.find_by_choices = (req, res)=>{
+    if(!req.body.choices){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
     }
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: sender_email,
-          pass: sender_password
-        }
-      })
+    const id = req.body.id;
+    const topic_id = req.body.topic_id;
+    const topic_index = req.body.topic_index;
+    const question_id = req.body.question_id;
+    const question_index = req.body.question_index;
+    const choices = req.body.choices;
+    const correctChoice = req.body.correctChoice;
 
-    transporter.sendMail(mailData, (error, info) => {
-            if (error){
-                res.status(500).send({ message : "Couldn't send the email"});
-                return console.log(error);
+    console.log('id: ' + id);
+    console.log('topic_id: ' + topic_id);
+    console.log('topic_index: ' + topic_index);
+    console.log('question_id: ' + question_id);
+    console.log('question_index: ' + question_index);
+    console.log('choices: ' + choices);
+    console.log('correctChoice: ' + correctChoice);
+    
+    Userdb.updateMany({ }, { $inc: { "quiz.$[topic].questionBank.$[question].counter": 1 } }, { arrayFilters: [ { "topic._id": topic_id }, { "question._id": question_id } ] } )
+        .then(data => {
+            if(!data){
+                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
+            }else{
+                if(choices == correctChoice){
+                    console.log('if-case updated-data: ' + data);
+                    //res.send(data)
+                    res.redirect('/correct?id='+id+'&topic_index='+topic_index+'&question_index='+question_index);
+                }
+                else{
+                    console.log('else-case updated-data: ' + data);
+                    //res.send(data)
+                    res.redirect('/incorrect?id='+id+'&topic_index='+topic_index+'&question_index='+question_index);
+                }
             }
-            //res.status(200).send({ message: "Mail send", message_id: info.messageID });req.query.id
-            res.redirect('/help-user?id='+req.query.id+'&topic_index='+req.query.topic_index+'&question_index='+req.query.question_index);
-    })
+        })
+        .catch(err =>{
+            res.status(500).send({ message : "Error Update user information"})
+        })
 }
 
-// retrieve user details based on 'id' and 'id_topic' value passed 
-/*
-exports.find_by_id_topic = (req, res)=>{
 
-    if(req.query.id && req.query.id_topic){
-        const id = req.query.id;
-        const id_topic = req.query.id_topic;
-        
-        console.log('id: '+id);
-        console.log('id_topic: '+id_topic);
-        
-        /* Normal functioning and checking nested search
-            Userdb.findById(id) 
-            .then(data =>{
-                if(data.length==0){
-                    res.status(404).send({ message : "User details are not found with id " + id})
-                }else{
-                    
-                    console.log('data: ' + data);
-                    res.send(data)
-                    
-                    //console.log('user: { _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }');
-                    //console.log(JSON.stringify('{ _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }'));
-                    //console.log(res.json('{ _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }'));
-                    //res.send(JSON.stringify('{ _id: ' + data._id + ', name: ' + data.name + ', email: ' + data.email + ', gender: ' + data.gender + ', totalRewardPoints: ' + data.totalRewardPoints + ', quiz: ' + data.quiz.filter(quizData => quizData.id === id_topic) + ' }'))
-                    
-                    //console.log(data.quiz.questionBank[0].filter(quizData => quizData.id === "62d5d60767d1ca451867a694"));
-                    //res.send(data.quiz.filter(quizData => quizData.id === id_topic));
+// Updating for claimed reward points
+exports.correct = (req, res)=>{
+    if(!req.body){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
+    }
 
-                
-                }
-            })
-        
-        /* Checking with simultanoues search 
-            //Userdb.find({ _id: id }, { "quiz._id": id_topic })
-            //Userdb.find({"quiz":{"$elemMatch":{"topic":"algebra"}}})
-            Userdb.aggregate([
-                    {
-                      $match: {
-                        "quiz._id": id_topic
-                      }
-                    },
-                    //just precondition can be skipped
-                    {$unwind: "$quiz"
-                  },
-                  {$match: {
-                    "quiz._id": id_topic
-                  }
-                  },
-                  {
-                  $group: {
-                    _id: {
-                      id: "$_id"
-                    },
-                    "quiz": {
-                      $push: "$quiz"
-                    }
-                  }
-                  }//,
-                  //{$group:{
-                  //    _id:"$_id.id",
-                  //    stores:{$push:{_id:"$_id.storesId","offers":"$offers"}}
-                  //}}
-                  ])
-                
-            .then(data =>{
-                if(data.length==0){
-                    res.status(404).send({ message : "User details are not found with id " + id})
-                }else{
-                    console.log(data);
-                    //console.log(data[0].quiz[1].topic);
-                    res.send(data)
-                }
-            })
-            
+    const id = req.body.id;
+    const topic_id = req.body.topic_id;
+    const topic_index = req.body.topic_index;
+    const question_id = req.body.question_id;
+    const question_index = req.body.question_index;
+    const rewardPoints = req.body.rewardPoints;
 
+    console.log('id: ' + id);
+    console.log('topic_id: ' + topic_id);
+    console.log('topic_index: ' + topic_index);
+    console.log('question_id: ' + question_id);
+    console.log('question_index: ' + question_index);
+    console.log('rewardPoints: ' + rewardPoints);
+    
+    Userdb.updateMany({ }, { $set: { "quiz.$[topic].questionBank.$[question].pointsEarned": rewardPoints }}, { arrayFilters: [ { "topic._id": topic_id }, { "question._id": question_id } ] } )
+        .then(data => {
+            if(!data){
+                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
+            }else{
+                console.log('Updated Data: ' + data);
+                //res.send(data)
+                res.redirect('/topic?id='+id+'&topic_index='+topic_index);
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message : "Error Update user information"})
+        })
+}
 
-            .catch(err =>{
-                res.status(500).send({ message: "Error retrieving user details with id " + id + " and id_topic " + id_topic})
-            })
+// Updating for user solution reward points
+exports.user_solution = (req, res)=>{
+    if(!req.body){
+        return res
+            .status(400)
+            .send({ message : "Data to update can not be empty"})
+    }
 
-    }else{
-         res.status(404).send({ message : "Either 'id' or 'id_topic' or both value(s) not passed while navigating to topic page" })
-         /* For trouble-shooting
-         Userdb.find()
-            .then(user => {
-                res.send(user)
-            })
-            .catch(err => {
-                res.status(500).send({ message : err.message || "Error Occurred while retriving user information" })
-            })
-        
+    const id = req.body.id;
+    const topic_id = req.body.topic_id;
+    const topic_index = req.body.topic_index;
+    const question_id = req.body.question_id;
+    const question_index = req.body.question_index;
+    const userSolution = req.body.userSolution;
+
+    console.log('id: ' + id);
+    console.log('topic_id: ' + topic_id);
+    console.log('topic_index: ' + topic_index);
+    console.log('question_id: ' + question_id);
+    console.log('question_index: ' + question_index);
+    console.log('userSolution: ' + userSolution);
+    
+    Userdb.updateMany({ }, { $set: { "quiz.$[topic].questionBank.$[question].userSolution": userSolution }}, { arrayFilters: [ { "topic._id": topic_id }, { "question._id": question_id } ] } )
+        .then(data => {
+            if(!data){
+                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
+            }else{
+                console.log('Updated Data: ' + data);
+                //res.send(data)
+                res.redirect('/question?id='+id+'&topic_index='+topic_index+'&question_index='+question_index);
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message : "Error Update user information"})
+        })
+}
+
+exports.text_email = (req, res) =>{
+
+    if(!(req.body.sender_email && req.body.sender_password && req.body.receiver_email && req.body.subject && req.body.sender_password && req.body.userSolution))
+    {
+        console.log('Warning: Please provide details in all fields to send email');
+        return res
+            .status(400)
+            .send({ message : "Please provide details in all fields to send email" })
     }   
+        const { sender_email, sender_password, receiver_email, subject, userSolution, id, topic_index, question_index } = req.body;
+
+        const mailData = {
+                from: sender_email,
+                to: receiver_email,
+                subject: subject,
+                text: userSolution
+        }
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+            user: sender_email,
+            pass: sender_password
+            }
+        })
+
+        transporter.sendMail(mailData, (error, info) => {
+                if (error){
+                    res.status(500).send({ message : "Couldn't send the email"});
+                    return console.log(error);
+                }
+                res.status(200).send({ message: "Mail send", message_id: info.messageID });
+        })
 }
-*/

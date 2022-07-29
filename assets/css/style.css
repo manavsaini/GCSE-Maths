@@ -151,6 +151,7 @@ table{
     margin: auto;
 }
 
+#correct .form-group,
 #help_user1 .form-group,
 #help_user2 .form-group,
 #question_response .form-group,
@@ -161,6 +162,7 @@ table{
     margin: .4em 0;
 }
 
+#correct .form-group input[type="text"],
 #help_user1 .form-group input[type="text"],
 #help_user2 .form-group input[type="text"],
 #question_response .form-group input[type="text"],
@@ -177,6 +179,7 @@ table{
     border-radius: .2em;
 }
 
+#correct .form-group input[type="password"],
 #help_user1 .form-group input[type="password"],
 #help_user2 .form-group input[type="password"],
 #question_response .form-group input[type="password"],
@@ -193,6 +196,7 @@ table{
     border-radius: .2em;
 }
 
+#correct .form-group .radio,
 #help_user1 .form-group .radio,
 #help_user2 .form-group .radio,
 #question_response .form-group .radio,
@@ -243,6 +247,7 @@ table{
     background: #b4b4b4;
 }
 
+#correct .form-group .btn,
 #help_user1 .form-group .btn,
 #help_user2 .form-group .btn,
 #question_response .form-group .btn,
@@ -261,6 +266,7 @@ table{
     margin: .5em 0;
 }
 
+#correct .form-group .btn,
 #help_user1 .form-group .btn,
 #help_user2 .form-group .btn,
 #question_response .form-group .btn,

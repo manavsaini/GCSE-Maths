@@ -1,0 +1,71 @@
+<!-- include header -->
+<%- include('include/_header') %>
+<!-- /include header -->
+
+<!-- variables section -->
+
+<% var all_data = users[0].user %>
+<% var quiz_index = users[1].topic_index %>
+<% var questionBank_index= users[2].question_index %>
+
+<!-- /variables section -->
+    
+    <!-- Main Site -->
+    <main id="site-main">
+        <div class="container">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>
+                            <div class="box-nav d-flex justify-between">
+                                <div class="filter">
+                                    <a href="/question?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>"><i class="fas fa-angle-double-left"></i> Back</a>
+                                </div>
+                            </div>
+                        </th>
+                        <th></th><th></th>
+                        <th><h2><%= all_data.quiz[quiz_index].topic %></h2></th>
+                       <td>
+                            <a href="/welcome-user?id=<%= all_data._id %>" class="btn border-shadow update">
+                                <span class="text-gradient"> Home </span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <table class="table">
+                <tbody>                 
+                    <thead class="thead-dark">
+                        <tr>
+                            <th> Hey <%= all_data.name %> !!!</th>
+                            <th></th>
+                            <th> Your choice is incorrect </th>
+                            <th></th>
+                            <th> Credit Score: <%= all_data.totalRewardPoints %> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                </tbody>
+            </table>
+
+            <div class="form-title text-center">
+                <h2><span class="text-dark">Wrong Answer!</span></h2>
+            </div>
+
+            <div class="form-title text-center">
+                <h3><span class="text-dark">Warning: You can claim reward points by answering the question correctly within 3 attempts.  </span></h3>
+            </div>
+
+            <div class="form-title text-center">
+                <h3><span class="text-dark">Tip(s): Click Help button and take some assistance before the final submission of your answer in the next attempt. </span></h3>
+            </div>
+
+        </div>
+    </main>
+<!-- /Main Site -->
+
+
+<!-- include footer -->
+<%- include('include/_footer') %>
+<!-- /include footer -->

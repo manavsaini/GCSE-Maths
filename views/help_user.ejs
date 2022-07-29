@@ -43,7 +43,7 @@
                             <th></th>
                             <th> Do you need some help? </th>
                             <th></th>
-                            <th> Reward Points: <%= all_data.totalRewardPoints %> </th>
+                            <th> Credit Score: <%= all_data.totalRewardPoints %> </th>
                             <th> </th>
                         </tr>
                     </thead>
@@ -59,15 +59,18 @@
             </div>
 
             <!-- form handling -->
-            <form method="POST" id="help_user1">
+            <form action="/api/users/user-solution" method="POST" id="help_user1">
                 <div class="new_user">
                     <div class="form-group">
                         <div class="form-title text-center">
                             <label for="userSolution" class="text-dark"><h4>Enter/Modify your detailed solution</h4></label>
                             <input type="text" name="userSolution" value="<%= all_data.quiz[quiz_index].questionBank[questionBank_index].userSolution %>" placeholder="Type here ...">
                         </div>
-                    </div>
-                    <div class="form-group">
+                        <input type="hidden" name="id" value="<%= all_data._id %>">
+                        <input type="hidden" name="topic_id" value="<%= all_data.quiz[quiz_index]._id %>">
+                        <input type="hidden" name="topic_index" value="<%= quiz_index %>"> 
+                        <input type="hidden" name="question_id" value="<%= all_data.quiz[quiz_index].questionBank[questionBank_index]._id %>">    
+                        <input type="hidden" name="question_index" value="<%= questionBank_index %>">
                         <button type="submit" class="btn text-dark update">Save</button>
                     </div>
                 </div>
@@ -78,29 +81,32 @@
             </div>
 
             <!-- form handling -->
-            <form action="/api/users/text-email?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>" method="POST" id="help_user2">
+            <form method="POST" id="help_user2">
                 <div class="new_user">
                     <div class="form-group">
-                        <label for="sender_email" class="text-light">Enter your email</label>
+                        <label for="sender_email" class="text-dark"><h4>Enter your email</h4></label>
                         <input type="text" name="sender_email" value="" placeholder="abc@gmail.com">
                     </div>
                     <div class="form-group">
-                        <label for="sender_password" class="text-light">Enter your password</label>
+                        <label for="sender_password" class="text-dark"><h4>Enter your password</h4></label>
                         <input type="password" name="sender_password" value="tvfqqaxlhcaddlml" placeholder="******">
                     </div>
                     <div class="form-group">
-                        <label for="receiver_email" class="text-light">Enter your reviewer's email</label>
+                        <label for="receiver_email" class="text-dark"><h4>Enter your reviewer's email</h4></label>
                         <input type="text" name="receiver_email" value="" placeholder="xyz@gmail.com">
                     </div>
                     <div class="form-group">
-                        <label for="subject" class="text-light">Enter the subject of email</label>
+                        <label for="subject" class="text-dark"><h4>Enter the subject of email</h4></label>
                         <input type="text" name="subject" value="" placeholder="Please review">
                     </div>
                     <div class="form-group">
-                        <label for="userSolution" class="text-light">Enter your detailed solution for review</label>
+                        <label for="userSolution" class="text-dark"><h4>Enter your detailed solution for review (You can also add any additional comments or doubts to clarify)</h4></label>
                         <input type="text" name="userSolution" value="" placeholder="Type here ...">
                     </div>
                     <div class="form-group">
+                        <input type="hidden" name="id" value="<%= all_data._id %>">    
+                        <input type="hidden" name="topic_index" value="<%= quiz_index %>">    
+                        <input type="hidden" name="question_index" value="<%= questionBank_index %>">
                         <button type="submit" class="btn text-dark update">Send for review</button>
                     </div>
                 </div>

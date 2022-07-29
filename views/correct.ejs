@@ -1,4 +1,3 @@
-
 <!-- include header -->
 <%- include('include/_header') %>
 <!-- /include header -->
@@ -20,17 +19,13 @@
                         <th>
                             <div class="box-nav d-flex justify-between">
                                 <div class="filter">
-                                    <a href="/topic?id=<%= all_data._id %>&topic_index=<%= quiz_index %>"><i class="fas fa-angle-double-left"></i> Back</a>
+                                    <a href="/question?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>"><i class="fas fa-angle-double-left"></i> Back</a>
                                 </div>
                             </div>
                         </th>
-                        <th></th><th></th><th></th><th></th><th></th><th></th>
+                        <th></th><th></th>
                         <th><h2><%= all_data.quiz[quiz_index].topic %></h2></th>
                        <td>
-                            <a href="/help-user?id=<%= all_data._id %>&topic_index=<%= quiz_index %>&question_index=<%= questionBank_index %>" class="btn border-shadow update">
-                                <i class="text-dark"> Help? </i>
-                            </a>                        
-
                             <a href="/welcome-user?id=<%= all_data._id %>" class="btn border-shadow update">
                                 <span class="text-gradient"> Home </span>
                             </a>
@@ -45,7 +40,7 @@
                         <tr>
                             <th> Hey <%= all_data.name %> !!!</th>
                             <th></th>
-                            <th> Question </th>
+                            <th> Your choice is correct </th>
                             <th></th>
                             <th> Credit Score: <%= all_data.totalRewardPoints %> </th>
                             <th> </th>
@@ -53,40 +48,42 @@
                     </thead>
                 </tbody>
             </table>
-
-            <div class="form-title text-center">
-                <h3><span class="text-dark"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].question %></span></h3>
-            </div>
             
-            <!-- form handling -->
-            <form action="/api/users/find-by-choices" method="POST" id="question_response">
+            <div class="form-title text-center">
+                <h2><span class="text-dark">Great Job!</span></h2>
+            </div>
+
+            <% if(all_data.quiz[quiz_index].questionBank[questionBank_index].pointsEarned == 0 && all_data.quiz[quiz_index].questionBank[questionBank_index].counter <= 3) { %>
+            <div class="form-title text-center">
+                <h3><span class="text-dark">Congratulations! You have also won <%= all_data.quiz[quiz_index].questionBank[questionBank_index].rewardPoints %> reward points. Click below to claim your reward.</span></h3>
+            </div>
+            <form action="/api/users/correct" method="POST" id="correct">
                 <div class="new_user">
                     <div class="form-group">
-                        <div class="form-title text-center">
-                            <label for="choices" class="text-dark"><h4>Select the correct option from below choices.</h4></label>
-                        </div>
-                        <table class="table">
-                            <tbody>
-                                <% for(var i = 0; i < all_data.quiz[quiz_index].questionBank[questionBank_index].choices.length; i++) { %>
-                                    <tr><td>
-                                        <div class="radio inline">
-                                            <input type="radio" id="radio<%= i+1 %>" name="choices" value=<%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[i] %>>
-                                            <label for="radio<%= i+1 %>" class="radio-label"><%= all_data.quiz[quiz_index].questionBank[questionBank_index].choices[i] %></label>
-                                        </div>
-                                    </td></tr>
-                                <% } %>
-                            </tbody>
-                        </table>
                         <input type="hidden" name="id" value="<%= all_data._id %>">
                         <input type="hidden" name="topic_id" value="<%= all_data.quiz[quiz_index]._id %>">
                         <input type="hidden" name="topic_index" value="<%= quiz_index %>"> 
                         <input type="hidden" name="question_id" value="<%= all_data.quiz[quiz_index].questionBank[questionBank_index]._id %>">    
                         <input type="hidden" name="question_index" value="<%= questionBank_index %>">
-                        <input type="hidden" name="correctChoice" value="<%= all_data.quiz[quiz_index].questionBank[questionBank_index].correctChoice %>">    
-                        <button type="submit" class="btn text-dark update">Submit</button>
+                        <input type="hidden" name="rewardPoints" value="<%= all_data.quiz[quiz_index].questionBank[questionBank_index].rewardPoints %>">
+                        <button type="submit" class="btn text-dark update">Claim</button>
                     </div>
                 </div>
             </form>
+            <% } %>
+
+            <% if(all_data.quiz[quiz_index].questionBank[questionBank_index].pointsEarned > 0) { %>
+                <div class="form-title text-center">
+                    <h3><span class="text-dark">You have already got the reward points in your previous attempt(s).</span></h3>
+                </div>
+            <% } %>
+
+            <% if(all_data.quiz[quiz_index].questionBank[questionBank_index].pointsEarned == 0 && all_data.quiz[quiz_index].questionBank[questionBank_index].counter > 3) { %>
+                <div class="form-title text-center">
+                    <h3><span class="text-dark">You have already attempted this question 3 times therefore you cannot claim for reward points now.</span></h3>
+                </div>
+            <% } %>
+
         </div>
     </main>
 <!-- /Main Site -->
