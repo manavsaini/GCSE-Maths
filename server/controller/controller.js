@@ -1,7 +1,7 @@
 var Userdb = require('../model/model');
 var nodemailer = require('nodemailer');
 
-// create and save new user
+// create and save a new user
 exports.create = (req,res)=>{
     // validate request
     if(!req.body){
@@ -128,7 +128,7 @@ exports.find_by_id = (req, res)=>{
     }   
 }
 
-// Update a new idetified user by user id
+// Update a new identified user by user id
 exports.update = (req, res)=>{
     if(!req.body){
         return res
@@ -173,6 +173,7 @@ exports.delete = (req, res)=>{
         });
 }
 
+// Updating to track the attempts count of user and redirecting it to the page displaying the result of user's choice
 exports.find_by_choices = (req, res)=>{
     if(!req.body.choices){
         return res
@@ -219,7 +220,7 @@ exports.find_by_choices = (req, res)=>{
 }
 
 
-// Updating for claimed reward points
+// Updating claimed reward points shown as Earned Points for each question and overall total reward points shown as Credit Score 
 exports.correct = (req, res)=>{
     if(!req.body){
         return res
@@ -246,17 +247,31 @@ exports.correct = (req, res)=>{
             if(!data){
                 res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
             }else{
-                console.log('Updated Data: ' + data);
+                console.log('Points Earned updated');
+                //res.send(data)
+                //res.redirect('/topic?id='+id+'&topic_index='+topic_index);
+            }
+        })
+        .catch(err =>{
+            res.status(500).send({ message : "Error Update user information"})
+        })
+    
+    Userdb.updateMany({ }, { $inc: { "totalRewardPoints": rewardPoints }}, { arrayFilters: [ { "_id": id } ] } )
+        .then(data => {
+            if(!data){
+                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
+            }else{
+                console.log('Total Reward Points Updated');
                 //res.send(data)
                 res.redirect('/topic?id='+id+'&topic_index='+topic_index);
             }
         })
         .catch(err =>{
             res.status(500).send({ message : "Error Update user information"})
-        })
+        })    
 }
 
-// Updating for user solution reward points
+// Saving user's solution
 exports.user_solution = (req, res)=>{
     if(!req.body){
         return res
@@ -293,6 +308,7 @@ exports.user_solution = (req, res)=>{
         })
 }
 
+// Sending email based on the input details from user
 exports.text_email = (req, res) =>{
 
     if(!(req.body.sender_email && req.body.sender_password && req.body.receiver_email && req.body.subject && req.body.sender_password && req.body.userSolution))
@@ -302,7 +318,7 @@ exports.text_email = (req, res) =>{
             .status(400)
             .send({ message : "Please provide details in all fields to send email" })
     }   
-        const { sender_email, sender_password, receiver_email, subject, userSolution, id, topic_index, question_index } = req.body;
+        const { sender_email, sender_password, receiver_email, subject, userSolution } = req.body;
 
         const mailData = {
                 from: sender_email,

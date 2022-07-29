@@ -4,7 +4,6 @@
     --dark: #2b2d42;
     --light: #adb5bd;
     --border: #dee2e6;
-    --border-btn: #edf2f4;
 }
 
 * {
@@ -42,8 +41,8 @@ a {
 }
 
 .border-shadow{
-    border: 1px solid var(--border-btn);
-    box-shadow: 1px 3px 10px #e9ecef;
+    border: 1px solid #efe9ea;
+    box-shadow: 1px 3px 10px #efe9ea;
 }
 
 .text-dark{
@@ -59,14 +58,14 @@ a {
 }
 
 .text-gradient{
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    background: linear-gradient(to right, #3f42ff, #3f42ff);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #header nav{
-    background-color: #06d6a0;
+    background-color: #7bbbff;
     padding: 1em 0;
     width: 100%;
 }
@@ -104,7 +103,7 @@ table{
 }
 
 .table tr:hover{
-    background-color:#06d6a0 ;
+    background-color:#7bbbff ;
 }
 
 .table tr:hover td > a{
@@ -113,7 +112,7 @@ table{
 
 .table .thead-dark th{
     color: #fff;
-    background-color: var(--dark) ;
+    background-color: #3f92ff ;
     border-color: #32383e;
 }
 
@@ -137,7 +136,6 @@ table{
 
 }
 
-/*  add user & update user template */
 .form-title{
     margin-top: 2em;
 }
@@ -215,7 +213,7 @@ table{
 
 .radio input[type='radio'] + .radio-label:before{
     content: "";
-    background: var(--border-btn);
+    background: #edf2f4;
     border-radius: 100%;
     border: 1px solid var(--border);
     display: inline-block;
@@ -232,13 +230,13 @@ table{
 }
 
 .radio input[type='radio']:checked + .radio-label:before{
-    background-color: #16db93;
+    background-color: #3f87ff;
     box-shadow: inset 0 0 0 4px #e9ecef;
 }
 
 .radio input[type='radio']:focus + .radio-label:before{
     outline: none;
-    border-color:#16db93;
+    border-color:#3f87ff;
 }
 
 .radio input[type='radio']:disabled + .radio-label:before{
@@ -257,7 +255,7 @@ table{
 #add_user .form-group .btn{
     width: 100%;
     padding: .9em 1em;
-    background-color:#16db93; 
+    background-color:#3f87ff; 
     border: none;
     font-family: 'PT Sans', sans-serif;
     font-size: 1em;
@@ -266,11 +264,11 @@ table{
     margin: .5em 0;
 }
 
-#correct .form-group .btn,
-#help_user1 .form-group .btn,
-#help_user2 .form-group .btn,
-#question_response .form-group .btn,
-#login_user .form-group .btn,
+#correct .form-group .btn:hover,
+#help_user1 .form-group .btn:hover,
+#help_user2 .form-group .btn:hover,
+#question_response .form-group .btn:hover,
+#login_user .form-group .btn:hover,
 #delete_user .form-group .btn:hover,
 #update_user .form-group .btn:hover,
 #add_user .form-group .btn:hover{
