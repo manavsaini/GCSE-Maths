@@ -52,9 +52,7 @@ $("#delete_user").submit(function(event){
 
 
 $("#question_response").submit(function(event){
-    if(confirm("Hope you have checked the Help option before submitting your final answer!")){
-            alert("Your answer is submitted succesfully!");
-    }
+    alert("Your answer is submitted succesfully! Before submitting your final answer, you could have also checked the Help option in case you need any hints!");
 })
 
 
