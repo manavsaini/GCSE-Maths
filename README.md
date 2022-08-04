@@ -23,6 +23,4 @@ npm start
 
 1. Code within files: config.env and server.js has been written by myself.
 2. Code within folders: assets, server and views has all been written by myself.
-Exception: CSS rules (only within style.css) have been adapted from https://bootsnipp.com/snippets/eN3Q8, written by pestisid
-
 3. The 'node_modules' folder as well as system files (like package.json, package-lock.json etc.) contains code from libraries that have been installed and is not written by me.
