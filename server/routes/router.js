@@ -69,7 +69,7 @@ route.post('/api/users', controller.create);
 route.get('/api/users', controller.login);
 route.get('/api/users/find-by-id', controller.find_by_id);
 route.put('/api/users/:id', controller.update);
-route.delete('/api/users/:id', controller.delete);
+route.get('/api/users/delete', controller.delete);
 route.post('/api/users/find-by-choices', controller.find_by_choices);
 route.post('/api/users/correct', controller.correct);
 route.post('/api/users/user-solution', controller.user_solution);
