@@ -271,7 +271,7 @@ exports.correct = (req, res)=>{
             res.status(500).send({ message : "Error Update user information"})
         })
     
-    Userdb.updateMany({ }, { $inc: { "totalRewardPoints": rewardPoints }}, { arrayFilters: [ { "_id": id } ] } )
+     Userdb.findByIdAndUpdate(id, { $inc: { "totalRewardPoints": rewardPoints }}, { useFindAndModify: false})
         .then(data => {
             if(!data){
                 res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})

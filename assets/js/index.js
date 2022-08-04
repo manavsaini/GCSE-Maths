@@ -89,25 +89,3 @@ $("#help_user2").submit(function(event){
         })
     }
 })
-
-/*
-$("#question_response").submit(function(event){   
-    event.preventDefault();
-
-    var unindexed_array = $(this).serializeArray();
-    var data = {}
-
-    $.map(unindexed_array, function(n, i){
-        data[n['name']] = n['value']
-    })
-
-    if(!data.choices){
-        alert("Please choose one of the given options before clicking Submit button!");
-    }
-    else{
-        if(confirm("Hope you have checked the Help option before submitting your final answer!")){
-            alert("Your answer is submitted succesfully!");
-        }
-    }
-})
-*/
