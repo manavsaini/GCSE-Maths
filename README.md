@@ -1,6 +1,11 @@
 # GCSE Mathematics App
 GCSE Mathematics app is a web-based application designed for making the learning of GCSE mathematics more interactive and enjoyable.
 
+# Declaration
+"I verify that I am the sole author of the programmes contained in this archive, except where explicitly stated to the contrary."
+
+Manav Saini
+08-08-2022
 
 # Installation
 Navigate to the directory of downloaded code project and run the command: 'npm install' to install required modules
